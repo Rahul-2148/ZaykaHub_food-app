@@ -1,0 +1,504 @@
+
+      <Button className='bg-red-500 w-20 rounded-full animate-bounce'>Click Me</Button>
+      <hr />
+      <br />
+      <Button className='bg-blue-500 w-20 rounded-full animate-pulse'>Click Me</Button>
+      <hr />
+      <br />
+      <Button className='bg-green-500 w-20 rounded-full animate-spin'>Click Me</Button>
+      <hr />
+      <br />
+      <Button className='bg-pink-500 w-20 rounded-full animate-ping'>Click Me</Button>
+      <hr />
+      <br />
+      <Button className='bg-orange-500 w-20 rounded-full animate-wiggle'>Click Me</Button>
+      <hr />
+      <br />
+      <Button className='relative w-32 h-12 bg-orange-500 text-white font-bold rounded-full flex items-center justify-center overflow-hidden'>Click Me <span className='absolute w-20 h-20 border-2 border-transparent border-t-white rounded-full animate-spin'></span></Button>
+
+
+
+
+
+
+🔴 Secure Password Validation with Zod
+
+import { z } from "zod";
+
+const passwordSchema = z.string()
+  .min(8, "Password must be at least 8 characters long")
+  .max(32, "Password must not exceed 32 characters")
+  .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+  .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+  .regex(/\d/, "Password must contain at least one number")
+  .regex(/[@$!%*?&]/, "Password must contain at least one special character (@$!%*?&)");
+
+const result = passwordSchema.safeParse("Secure@123");
+
+if (!result.success) {
+  console.log(result.error.format()); // Shows validation errors
+} else {
+  console.log("Password is valid!");
+}
+
+
+# For when you need differnt roles according to your website needs
+user.model.ts 
+import mongoose, { Document } from "mongoose";
+
+export interface IUser {
+  fullname: string;
+  email: string;
+  password: string;
+  contact: number;
+  address: string;
+  city: string;
+  country: string;
+  postalCode: string;
+  profilePicture: string;
+  admin: boolean;
+  lastLogin?: Date;
+  isVerified?: boolean;
+  resetPasswordToken?: string;
+  resetPasswordTokenExpiresAt?: Date;
+  verificationToken?: string;
+  verificationTokenExpiresAt?: Date;
+  deletionDate?: Date | null;
+}
+
+export interface IUserDocument extends IUser, Document {
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const userSchema = new mongoose.Schema<IUserDocument>(
+  {
+    fullname: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    contact: {
+      type: Number,
+      required: true,
+    },
+    address: {
+      type: String,
+      default: "Update your address",
+    },
+    city: {
+      type: String,
+      default: "Update your city",
+    },
+    country: {
+      type: String,
+      default: "Update your country",
+    },
+    postalCode: {
+      type: String,
+      default: "Update your city pin code",
+    },
+    profilePicture: {
+      type: String,
+      default: "",
+    },
+    admin: {
+      type: Boolean,
+      default: false,
+    },
+
+    // role: {
+    //   type: String,
+    //   enum: ["user", "admin", "manager", "chef"],
+    //   default: "customer",
+    // },
+
+    // advanced authentication
+    lastLogin: {
+      type: Date,
+      default: Date.now,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    resetPasswordToken: String,
+    resetPasswordTokenExpiresAt: Date,
+    verificationToken: String,
+    verificationTokenExpiresAt: Date,
+    deletionDate: {
+      type: Date,
+      default: null, // Default to null (not scheduled for deletion)
+    },
+  },
+  { timestamps: true }
+);
+
+// userSchema.pre("save", function (next) {
+//   if (this.admin) {
+//     this.role = "admin"; // ✅ Auto-update role when isAdmin is true
+//   }
+//   next();
+// });
+
+// userSchema.pre("save", function (next) {
+//   if (!this.admin) {
+//     this.role = "user"; // ✅ Auto-update role when isAdmin is false
+//   }
+//   next();
+// });
+
+export const User = mongoose.model("User", userSchema);
+
+
+
+
+
+// // Update user role controller
+// export const updateUserRole = async (req: Request, res: Response) => {
+//   try {
+//     const userId = req.params.userId;
+//     const { role } = req.body;
+//     const user = await User.findByIdAndUpdate(userId, { role }, { new: true });
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+//     return res.status(200).json({
+//       success: true,
+//       message: "User role updated successfully",
+//       user,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------- Review or rating the restaurant section -----------------
+
+// add review of restaurant controller
+// export const addReview = async (req: Request, res: Response) => {
+//   try {
+//     const { id } = req.params; // Restaurant ID
+//     const { rating, comment } = req.body;
+
+//     const userId = req.id;
+
+//     if (!userId) {
+//       return res.status(401).json({ message: "Unauthorized: Please log in to add a review" });
+//     }
+
+//     if (rating !== undefined && (rating < 1 || rating > 5)) {
+//       return res.status(400).json({ message: "Rating must be between 1 and 5" });
+//     }
+
+//     if (!rating && !comment) {
+//       return res.status(400).json({ message: "At least one of rating or comment is required" });
+//     }
+
+//     const restaurant = await Restaurant.findById(id);
+//     if (!restaurant) {
+//       return res.status(404).json({ message: "Restaurant not found" });
+//     }
+
+//     // Create a new review object dynamically
+//     const newReview: any = {
+//       user: userId,
+//       createdAt: new Date(),
+//       updatedAt: new Date(),
+//     };
+
+//     if (rating !== undefined) {
+//       newReview.rating = Number(rating);
+//     }
+
+//     if (comment) {
+//       newReview.comment = comment;
+//     }
+
+//     // Add new review at the beginning of the array
+//     restaurant.reviews.unshift(newReview);
+
+//     // Update average rating only if a new rating was added
+//     if (rating !== undefined) {
+//       const validReviews = restaurant.reviews.filter(r => r.rating !== undefined);
+//       const totalRatings = validReviews.reduce((sum, r) => sum + r.rating, 0);
+//       restaurant.averageRating = validReviews.length > 0 ? totalRatings / validReviews.length : 0;
+//     }
+
+//     await restaurant.save();
+//     res.status(200).json({ message: "Review added successfully", restaurant });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error", error });
+//   }
+// };
+
+// // get all reviews controller
+// export const getReviews = async (req: Request, res: Response) => {
+//   try {
+//     const { id } = req.params; // Restaurant ID
+
+//     const restaurant = await Restaurant.findById(id)
+//       .populate("reviews.user", "name email") // Fetch user details
+//       .lean(); // Convert Mongoose object to plain JSON
+
+//     if (!restaurant) {
+//       return res.status(404).json({ message: "Restaurant not found" });
+//     }
+
+//     // Sort reviews so latest ones appear first (already handled by `unshift()` in addReview)
+//     res.status(200).json({ reviews: restaurant.reviews });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error", error });
+//   }
+// };
+
+// // update review controller
+// export const updateReview = async (req: Request, res: Response) => {
+//   try {
+//     const { id } = req.params; // Restaurant ID
+//     const { rating, comment } = req.body;
+//     const userId = req.id; // Logged-in user ID
+
+//     if (!userId) {
+//       return res.status(401).json({ message: "Unauthorized: Please log in to update a review" });
+//     }
+
+//     if (rating !== undefined && (rating < 1 || rating > 5)) {
+//       return res.status(400).json({ message: "Rating must be between 1 and 5" });
+//     }
+
+//     if (rating === undefined && !comment) {
+//       return res.status(400).json({ message: "At least one of rating or comment is required" });
+//     }
+
+//     const restaurant = await Restaurant.findById(id);
+//     if (!restaurant) {
+//       return res.status(404).json({ message: "Restaurant not found" });
+//     }
+
+//     // Find existing review
+//     const existingReview = restaurant.reviews.find((r) => r.user.toString() === userId);
+//     if (!existingReview) {
+//       return res.status(404).json({ message: "Review not found for this user" });
+//     }
+
+//     // Update rating and comment only if provided
+//     if (rating !== undefined) {
+//       existingReview.rating = Number(rating);
+//     }
+//     if (comment) {
+//       existingReview.comment = comment;
+//     }
+//     existingReview.updatedAt = new Date();
+
+//     // Recalculate average rating only if rating was updated
+//     if (rating !== undefined) {
+//       const totalRatings = restaurant.reviews.reduce((sum, r) => sum + (r.rating || 0), 0);
+//       const totalCount = restaurant.reviews.filter(r => r.rating !== undefined).length;
+//       restaurant.averageRating = totalCount > 0 ? totalRatings / totalCount : 0;
+//     }
+
+//     await restaurant.save();
+//     res.status(200).json({ message: "Review updated successfully", restaurant });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error", error });
+//   }
+// };
+
+// // Delete Review controller (only author and admin can delete)
+
+// export const deleteReview = async (req: Request, res: Response) => {
+//   try {
+//     const { restaurantId, reviewId } = req.params;
+//     const userId = req.id; // Ensure this is being extracted correctly
+
+//     console.log("Restaurant ID:", restaurantId);
+//     console.log("Review ID:", reviewId);
+//     console.log("User ID:", userId);
+
+//     if (!userId) {
+//       return res.status(401).json({ message: "Unauthorized: Please log in to delete a review" });
+//     }
+
+//     const restaurant = await Restaurant.findById(restaurantId);
+//     if (!restaurant) {
+//       console.log("Restaurant not found in DB"); // Debug log
+//       return res.status(404).json({ message: "Restaurant not found" });
+//     }
+
+//     // Find the review
+//     const reviewIndex = restaurant.reviews.findIndex((r) => r._id.toString() === reviewId);
+//     if (reviewIndex === -1) {
+//       console.log("Review not found in restaurant"); // Debug log
+//       return res.status(404).json({ message: "Review not found" });
+//     }
+
+//     // Check if the user is the review author or an admin
+//     if (restaurant.reviews[reviewIndex].user.toString() !== userId) {
+//       return res.status(403).json({ message: "Unauthorized: You can only delete your own review" });
+//     }
+
+//     // Remove the review
+//     restaurant.reviews.splice(reviewIndex, 1);
+
+//     // Recalculate average rating
+//     const totalRatings = restaurant.reviews.reduce((sum, r) => sum + (r.rating || 0), 0);
+//     const totalCount = restaurant.reviews.length;
+//     restaurant.averageRating = totalCount > 0 ? totalRatings / totalCount : 0;
+
+//     await restaurant.save();
+//     res.status(200).json({ message: "Review deleted successfully" });
+//   } catch (error) {
+//     console.error("Delete Review Error:", error);
+//     res.status(500).json({ message: "Server error", error });
+//   }
+// };
+
+🔸
+// AvailableMenu.tsx file with some modification 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { MenuItem } from "@/types/restaurantType";
+import { useCartStore } from "@/Zustand Store/useCartStore";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
+const AvailableMenu = ({ menus }: { menus: MenuItem[] }) => {
+  const { addToCart } = useCartStore();
+  const navigateTo = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState<MenuItem | null>(null);
+
+  const handleAddToCart = (menu: MenuItem) => {
+    addToCart(menu);
+    setSelectedMenu(menu);
+    setOpen(true); // Open modal after adding item to cart
+  };
+
+  // Similar Items Suggestion (Random 3 items)
+  const similarItems = menus
+    .filter((item) => item._id !== selectedMenu?._id)
+    .slice(0, 3);
+
+  return (
+    <div className="md:p-4">
+      <h1 className="text-xl md:text-2xl font-extrabold mb-6">
+        Available Menu's
+      </h1>
+
+      {/* Menu Grid */}
+      <div className="grid md:grid-cols-3 space-y-4 md:space-y-0">
+        {menus.map((menu: MenuItem) => (
+          <Card
+            key={menu._id}
+            className="max-w-xs shadow-lg rounded-lg overflow-hidden"
+          >
+            <img src={menu.image} alt={menu.name} className="w-full h-50" />
+            <CardContent className="p-4">
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+                {menu.name}
+              </h2>
+              <p className="text-sm text-gray-600 mt-2">{menu.description}</p>
+              <h3 className="text-lg font-semibold mt-4">
+                Price: <span className="text-[#fe7b00]">₹{menu.price}</span>
+              </h3>
+            </CardContent>
+            <CardFooter className="p-4">
+              <Button
+                onClick={() => handleAddToCart(menu)}
+                className="bg-orange-500 hover:bg-orange-600 text-black dark:text-white w-full"
+              >
+                Add to Cart
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+
+      {/* Cart Confirmation Modal */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="p-6 max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">
+              Added to Cart!
+            </DialogTitle>
+          </DialogHeader>
+
+          {selectedMenu && (
+            <div className="flex items-center gap-4">
+              <img
+                src={selectedMenu.image}
+                alt={selectedMenu.name}
+                className="w-20 h-20 rounded-lg"
+              />
+              <div>
+                <p className="text-lg font-semibold">{selectedMenu.name}</p>
+                <p className="text-sm text-gray-500">₹{selectedMenu.price}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Similar Products */}
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold">Similar Items</h3>
+            <div className="grid grid-cols-3 gap-2">
+              {similarItems.map((item) => (
+                <div
+                  key={item._id}
+                  className="border p-2 rounded-md text-center"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="h-16 w-full object-cover rounded-md"
+                  />
+                  <p className="text-xs mt-1">{item.name}</p>
+                  <p className="text-sm font-semibold text-orange-500">
+                    ₹{item.price}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex justify-between mt-4">
+            <Button variant="outline" onClick={() => navigateTo("/cart")}>
+              Go to Cart
+            </Button>
+            <Button variant="secondary" onClick={() => navigateTo("/checkout")}>
+              Proceed to Checkout
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+export default AvailableMenu;

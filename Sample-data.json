@@ -1,0 +1,59 @@
+
+{
+    "descriptions": [
+        {
+            "description": "Gulab jamun, a beloved Indian sweet, are soft, milk-based dough balls deep-fried until golden brown and then soaked in a sweet, rose-flavored syrup, often served warm. (1 box ❌ 10 pieces)"
+        },
+        {
+            "description": "Indulge in a symphony of flavors with our \"Rajdhanwar Veg Thali,\" a vibrant platter of regional specialties, featuring a medley of flavorful curries, aromatic rice, fresh roti, and delightful accompaniments, all served on a traditional thali."
+        },
+        {
+            "description": "Jalebi is a popular Indian sweet snack, a spiral-shaped, crispy, and juicy treat made with all-purpose flour, gram flour, and sugar syrup, often flavored with saffron and cardamom. These crispy, spiral-shaped Indian sweets are soaked in a sweet, fragrant sugar syrup, offering a delightful combination of textures and flavors."
+        },
+        {
+            "description": "Our Biryani is India famous Kolkata biryani. Kolkata biryani is a type of biryani that originated in the Indian city of Kolkata. It is a dish that is made with Indian spices, rice, and meat, and is known for its rich and flavorful taste. The dish is typically made with basmati rice, meat, and a variety of spices, and is often served with a side of raita or salad."
+        }
+    ],
+    "cartData": [
+        {
+            "_id": "1",
+            "cartItems": [
+                {
+                    "image": "hero_pizza",
+                    "name": "Pizza",
+                    "quantity": 1,
+                    "price": 200
+                }
+            ],
+            "totalAmount": 200
+        },
+        {
+            "_id": "2",
+            "cartItems": [
+                {
+                    "image": "hero_pizza",
+                    "name": "Pizza",
+                    "quantity": 1,
+                    "price": 200
+                }
+            ],
+            "totalAmount": 200
+        },
+        {
+            "_id": "3",
+            "cartItems": [
+                {
+                    "image": "hero_pizza",
+                    "name": "Pizza",
+                    "quantity": 1,
+                    "price": 200
+                }
+            ],
+            "totalAmount": 200
+        }
+    ]
+}
+
+
+
+
