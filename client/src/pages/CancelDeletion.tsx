@@ -10,7 +10,8 @@ const CancelDeletion = () => {
 
   useEffect(() => {
     if (userId) {
-      fetch(`http://localhost:8000/api/v1/user/cancel-deletion/${userId}`, {
+      // fetch(`http://localhost:8000/api/v1/user/cancel-deletion/${userId}`, {
+       fetch(`https://zaykahub-food-app.onrender.com/api/v1/user/cancel-deletion/${userId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

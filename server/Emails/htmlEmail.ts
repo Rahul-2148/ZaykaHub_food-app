@@ -1,7 +1,8 @@
 
 // Verification Email HTML
 export const htmlContent = (name: string, email: string, verificationToken: string) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
 
   return `
   <!DOCTYPE html>
@@ -93,12 +94,16 @@ export const htmlContent = (name: string, email: string, verificationToken: stri
         <p>Welcome to <strong>ZaykaHub Food</strong>. To complete your registration, please verify your email address using the code below:</p>
         <div class="verification-code">${verificationToken}</div>
         <p>Or, click the button below to verify directly:</p>
-        <a href="http://localhost:8000/api/v1/user/verify-email?token=${verificationToken}" class="cta-button">Verify My Email</a>
+
+        <a href="https://zaykahub-food-app.onrender.com/api/v1/user/verify-email?token=${verificationToken}" class="cta-button">Verify My Email</a>
+        
         <p>If you did not request this verification, you can safely ignore this email.</p>
       </div>
       <div class="footer">
         <p>&copy; ${new Date().getFullYear()} ZaykaHub Food. All rights reserved.</p>
-        <p>Need help? <a href="https://zaykahub.com/support">Contact Support</a></p>
+
+        <p>Need help? <a href="https://zaykahub-food-app.onrender.com/contact">Contact Support</a></p>
+
         </br>
         <p>If you do not want to receive emails from us, <a href="${unsubscribeLink}">click here to unsubscribe</a>.</p>
       </div>
@@ -108,10 +113,11 @@ export const htmlContent = (name: string, email: string, verificationToken: stri
   `;
 };
 
-
 // Welcome Email HTML
 export const generateWelcomeEmailHtml = (name: string, email: string) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
+
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -282,7 +288,8 @@ export const generateWelcomeEmailHtml = (name: string, email: string) => {
 
 // Password Reset Email HTML
 export const generatePasswordResetEmailHtml = (name: string, resetPasswordLink: string, email: string) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+  
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -392,7 +399,8 @@ export const generatePasswordResetEmailHtml = (name: string, resetPasswordLink: 
 
 // Password Reset Success Email HTML
 export const generateResetSuccessEmailHtml = (name: string, email: string) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
   return `
     <html>
       <head>
@@ -472,7 +480,7 @@ export const generateResetSuccessEmailHtml = (name: string, email: string) => {
 
             <!-- Call to Action Button -->
             <p style="text-align: center;">
-              <a href="https://zaykahub.com/login" class="button">Log In Now</a>
+              <a href="https://zaykahub-food-app.onrender.com/login" class="button">Log In Now</a>
             </p>
 
             <div class="divider"></div>
@@ -499,9 +507,9 @@ export const generateAccountDeletionEmailHtml = (
   userId: string,
   email: string
 ) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
 
-  const cancelDeletionLink = `http://localhost:5173/cancel-deletion?userId=${userId}`;
+  const cancelDeletionLink = `https://zaykahub-food-app.onrender.com/cancel-deletion?userId=${userId}`;
 
   const formattedDeletionDate = new Date(deletionDate).toLocaleDateString(
     "en-IN",
@@ -642,7 +650,7 @@ export const generateAccountDeletionEmailHtml = (
 
 // Accont deletion cancel Email Html
 export const generateAccountDeletionCanceledEmailHtml = (email: string) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
   return `
     <html>
       <head>
@@ -749,7 +757,7 @@ export const generateAccountDeletionCanceledEmailHtml = (email: string) => {
 
             <!-- Call to Action Button -->
             <div class="button-container">
-              <a href="http://localhost:5173/dashboard" class="button">Go to Dashboard</a>
+              <a href="https://zaykahub-food-app.onrender.com/" class="button">Go to Dashboard</a>
             </div>
 
             <p>Thank you for staying with us! ❤️</p>
@@ -779,7 +787,7 @@ export const generateOrderConfirmationEmailHtml = (
   totalAmount: number,
   email: string
 ) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
 
   const formattedOrderDate = new Date(orderDate).toLocaleDateString("en-IN", {
     day: "numeric",
@@ -907,7 +915,7 @@ export const generateOrderConfirmationEmailHtml = (
 
             <!-- Call to Action Button -->
             <div class="button-container">
-              <a href="http://localhost:5173/track-order?orderId=${orderId}" class="button">Track Your Order</a>
+              <a href="https://zaykahub-food-app.onrender.com/track-order?orderId=${orderId}" class="button">Track Your Order</a>
             </div>
 
             <p>If you have any questions, feel free to contact our support team.</p>
@@ -934,7 +942,7 @@ export const generateOrderShippedEmailHtml = (
   customerName: string,
   email: string
 ) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
 
   const formattedDeliveryDate = new Date(
     estimatedDeliveryDate
@@ -1040,7 +1048,7 @@ export const generateOrderDeliveryEmailHtml = (
   totalAmount: number,
   email: string
 ) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
 
   const formattedDeliveryDate = new Date(deliveryDate).toLocaleDateString(
     "en-IN",
@@ -1171,7 +1179,7 @@ export const generateOrderDeliveryEmailHtml = (
 
             <!-- Call to Action Button -->
             <div class="button-container">
-              <a href="http://localhost:5173/review-order?orderId=${orderId}" class="button">Give Feedback</a>
+              <a href="https://zaykahub-food-app.onrender.com/order/status?orderId=${orderId}" class="button">Give Feedback</a>
             </div>
 
             <p>If you have any concerns or issues, feel free to contact our support team.</p>
@@ -1197,7 +1205,7 @@ export const generateOrderCancelledEmailHtml = (
   customerName: string,
   email: string
 ) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
 
   return `
     <html>
@@ -1289,7 +1297,7 @@ export const generateOrderCancelledEmailHtml = (
 
             <!-- Action Button -->
             <div class="button-container">
-              <a href="http://localhost:5173/shop" class="button">Browse Products</a>
+              <a href="https://zaykahub-food-app.onrender.com/shop" class="button">Browse Products</a>
             </div>
 
             <p>For any questions, feel free to contact our support team.</p>
@@ -1315,7 +1323,7 @@ export const generateOrderReturnedEmailHtml = (
   customerName: string,
   email: string
 ) => {
-  const unsubscribeLink = `https://localhost:8000/api/v1/user/unsubscribe/${email}`;
+  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
 
   return `
     <html>
@@ -1407,7 +1415,7 @@ export const generateOrderReturnedEmailHtml = (
 
             <!-- Action Button -->
             <div class="button-container">
-              <a href="http://localhost:5173/orders" class="button">View Order Status</a>
+              <a href="https://zaykahub-food-app.onrender.com/order/status" class="button">View Order Status</a>
             </div>
 
             <p>If you need further assistance, feel free to contact our support team.</p>

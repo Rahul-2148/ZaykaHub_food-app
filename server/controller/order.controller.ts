@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import { Restaurant } from "../models/restaurant.model";
 import { Order } from "../models/order.model";
 import Stripe from "stripe";
+import { sendOrderConfirmationEmail } from "../Emails/email";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -113,6 +114,14 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
         .json({ success: false, message: "Error while creating session" });
     }
 
+    sendOrderConfirmationEmail(
+      checkoutSessionRequest.deliveryDetails.email,
+      checkoutSessionRequest.deliveryDetails.name + " " + checkoutSessionRequest.deliveryDetails.contact,
+      orderId,
+      checkoutSessionRequest.totalAmount.toString(),
+      checkoutSessionRequest.cartItems,
+      parseInt(checkoutSessionRequest.deliveryDetails.address, 10) // Convert string to number
+    )
     await order.save();
 
     console.log(session);
