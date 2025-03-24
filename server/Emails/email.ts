@@ -70,7 +70,8 @@ export const sendPasswordResetEmail = async (
 };
 
 // Send reset success email
-export const sendResetSuccessEmail = async (name: string, email: string) => {
+export const sendResetSuccessEmail = async (email: string, name: string) => {
+
   try {
     await transporter.sendMail({
       from: `"ZaykaHub" <${process.env.SMTP_USER_MAIL}>`,
