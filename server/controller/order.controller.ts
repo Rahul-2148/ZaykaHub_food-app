@@ -114,14 +114,20 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
         .json({ success: false, message: "Error while creating session" });
     }
 
-    sendOrderConfirmationEmail(
+    // Send order confirmation email
+    await sendOrderConfirmationEmail(
       checkoutSessionRequest.deliveryDetails.email,
-      checkoutSessionRequest.deliveryDetails.name + " " + checkoutSessionRequest.deliveryDetails.contact,
       orderId,
-      checkoutSessionRequest.totalAmount.toString(),
-      checkoutSessionRequest.cartItems,
-      parseInt(checkoutSessionRequest.deliveryDetails.address, 10) // Convert string to number
-    )
+      checkoutSessionRequest.orderedDate.toString(),
+      checkoutSessionRequest.deliveryDetails.name,
+      checkoutSessionRequest.cartItems.map((item) => ({
+        name: item.name,
+        quantity: item.quantity, 
+        price: item.price, 
+      })),
+      checkoutSessionRequest.totalAmount
+    );
+    
     await order.save();
 
     console.log(session);

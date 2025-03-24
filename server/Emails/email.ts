@@ -134,6 +134,9 @@ export const sendOrderConfirmationEmail = async (
   totalAmount: number
 ) => {
   try {
+    console.log("🚀 Sending order confirmation email to:", email);
+    console.log("📦 Order Items:", items);
+    
     const emailHtml = generateOrderConfirmationEmailHtml(
       orderId,
       orderDate,

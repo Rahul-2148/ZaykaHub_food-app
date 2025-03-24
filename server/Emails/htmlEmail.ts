@@ -787,7 +787,7 @@ export const generateOrderConfirmationEmailHtml = (
   totalAmount: number,
   email: string
 ) => {
-  const unsubscribeLink = `https://zaykahub-food-app.onrender.com/api/v1/user/unsubscribe/${email}`;
+  const unsubscribeLink = `http://localhost:5173/api/v1/user/unsubscribe/${email}`;
 
   const formattedOrderDate = new Date(orderDate).toLocaleDateString("en-IN", {
     day: "numeric",
@@ -805,9 +805,9 @@ export const generateOrderConfirmationEmailHtml = (
           <td style="padding: 10px; border-bottom: 1px solid #ddd;">${
             item.quantity
           }</td>
-          <td style="padding: 10px; border-bottom: 1px solid #ddd;">₹${item.price.toFixed(
-            2
-          )}</td>
+<td style="padding: 10px; border-bottom: 1px solid #ddd;">₹${Number(
+        item.price
+      ).toFixed(2)}</td>
         </tr>
       `
     )
@@ -915,7 +915,7 @@ export const generateOrderConfirmationEmailHtml = (
 
             <!-- Call to Action Button -->
             <div class="button-container">
-              <a href="https://zaykahub-food-app.onrender.com/track-order?orderId=${orderId}" class="button">Track Your Order</a>
+              <a href="http://localhost:5173/track-order?orderId=${orderId}" class="button">Track Your Order</a>
             </div>
 
             <p>If you have any questions, feel free to contact our support team.</p>
