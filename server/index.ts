@@ -25,14 +25,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const DIRNAME = path.resolve();
+const configuredFrontendOrigins = process.env.FRONTEND_ORIGIN || process.env.FRONTEND_URL || "http://localhost:5173";
 const frontendOrigins = [
     "http://localhost:5173",
     "http://localhost:5174",
-    ...(process.env.FRONTEND_ORIGIN || process.env.FRONTEND_URL
-        ? (process.env.FRONTEND_ORIGIN || process.env.FRONTEND_URL)
-            .split(",")
-            .map((origin) => origin.trim())
-        : []),
+    ...configuredFrontendOrigins.split(",").map((origin) => origin.trim()),
 ].filter(Boolean);
 
 app.use(morgan("dev"));
