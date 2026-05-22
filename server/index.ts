@@ -62,11 +62,6 @@ app.use("/api/v1/rating", reviewsRoute);
 app.use("/api/v1/comment", commentRoute);
 app.use("/api/v1/reply", replyRoute);
 
-app.use(express.static(path.join(DIRNAME,"/client/dist")));
-app.use("*",(_,res) => {
-    res.sendFile(path.resolve(DIRNAME, "client","dist","index.html"));
-});
-
 // default route
 app.get('/', (req, res) => {
     res.send('Restaurant 2025 with typescript Website Testing...');
