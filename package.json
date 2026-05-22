@@ -1,0 +1,9 @@
+{
+  "name": "zaykahub-food-app-root",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm install --prefix server && npm run build --prefix server",
+    "start": "npm start --prefix server"
+  }
+}
