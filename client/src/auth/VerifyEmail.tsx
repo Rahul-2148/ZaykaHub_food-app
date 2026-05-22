@@ -68,11 +68,11 @@ const VerifyEmail = () => {
   }, [otp, submitVerification]);
 
   return (
-    <div className="flex items-center justify-center h-screen w-full">
-      <div className="p-8 rounded-md w-full max-w-md flex flex-col gap-10 border border-gray-300">
+    <div className="auth-page app-shell">
+      <div className="auth-card flex flex-col gap-10">
         <div className="text-center">
-          <h1 className="font-extrabold text-2xl mb-2">Verify your email</h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <h1 className="auth-title mb-2">Verify your email</h1>
+          <p className="auth-help">
             Enter the 6-digit code sent to your email address
           </p>
         </div>
@@ -95,7 +95,7 @@ const VerifyEmail = () => {
                   }
                 }}
                 maxLength={1}
-                className="md:w-12 md:h-12 w-8 h-8 text-center text-sm md:text-2xl font-normal md:font-bold rounded-lg border border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="md:w-12 md:h-12 w-8 h-8 text-center text-sm md:text-2xl font-normal md:font-bold rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             ))}
           </div>

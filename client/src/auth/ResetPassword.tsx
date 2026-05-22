@@ -33,11 +33,11 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-full">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5 md:p-8 w-full max-w-md rounded-lg mx-4">
+    <div className="auth-page app-shell">
+      <form onSubmit={handleSubmit} className="auth-card flex flex-col gap-5">
         <div className="text-center">
-          <h1 className="font-extrabold text-2xl mb-2">Reset Password</h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <h1 className="auth-title mb-2">Reset Password</h1>
+          <p className="auth-help">
             Enter your new password to reset your old one
           </p>
         </div>
@@ -52,16 +52,16 @@ const ResetPassword = () => {
           />
           {showPassword ? (
             <FaEye
-              className="absolute inset-y-2 right-2 text-gray-500 cursor-pointer h-5 w-5"
+              className="absolute inset-y-2 right-2 cursor-pointer h-5 w-5 text-gray-500 dark:text-gray-400"
               onClick={() => setShowPassword(!showPassword)}
             />
           ) : (
             <FaRegEyeSlash
-              className="absolute inset-y-2 right-2 text-gray-500 cursor-pointer h-5 w-5"
+              className="absolute inset-y-2 right-2 cursor-pointer h-5 w-5 text-gray-500 dark:text-gray-400"
               onClick={() => setShowPassword(!showPassword)}
             />
           )}
-          <LockKeyholeIcon className="absolute inset-y-2 left-2 text-gray-600 pointer-events-none" />
+          <LockKeyholeIcon className="absolute inset-y-2 left-2 auth-icon" />
         </div>
         {loading ? (
           <Button disabled className="px-4 py-2 rounded-md" style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-accent-foreground)' }}>
@@ -73,8 +73,8 @@ const ResetPassword = () => {
           </Button>
         )}
         <span className="text-center">
-          Back to{" "}
-          <Link to="/login" className="text-blue-500 hover:text-blue-600">
+          <span className="auth-muted">Back to </span>
+          <Link to="/login" className="auth-link">
             Login
           </Link>
         </span>

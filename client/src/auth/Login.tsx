@@ -80,17 +80,17 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen rounded-2xl shadow-2xl">
+    <div className="auth-page app-shell">
       <form
         onSubmit={loginSubmitHandler}
-        className="md:p-8 w-full max-w-md rounded-lg md:border border-gray-200 mx-4"
+        className="auth-card flex flex-col gap-4"
       >
         <div className="space-y-4 mb-6">
-          <h1 className="font-bold text-2xl">
-            Zayka<span className="text-orange-600">Hub</span>
+          <h1 className="auth-title">
+            Zayka<span className="auth-accent">Hub</span>
           </h1>
         </div>
-        <Label>Email</Label>
+        <Label className="auth-label">Email</Label>
         <div className="relative space-y-4">
           <Input
             type="email"
@@ -100,12 +100,12 @@ const Login = () => {
             onChange={changeEventHandler}
             className="pl-10 focus-visible:ring-1"
           />
-          <Mail className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
+          <Mail className="absolute inset-y-2 left-2 auth-icon" />
           {errors.email && (
             <span className="text-red-500 text-xs">{errors.email}</span>
           )}
         </div>
-        <Label>Password</Label>
+        <Label className="auth-label">Password</Label>
         <div className="relative space-y-4">
           <Input
             type={showPassword ? "text" : "password"}
@@ -117,16 +117,16 @@ const Login = () => {
           />
           {showPassword ? (
             <FaEye
-              className="absolute inset-y-2 right-2 text-gray-500 dark:text-gray-400 cursor-pointer h-5 w-5"
+              className="absolute inset-y-2 right-2 cursor-pointer h-5 w-5 text-gray-500 dark:text-gray-400"
               onClick={() => setShowPassword(!showPassword)}
             />
           ) : (
             <FaRegEyeSlash
-              className="absolute inset-y-2 right-2 text-gray-500 dark:text-gray-400 cursor-pointer h-5 w-5"
+              className="absolute inset-y-2 right-2 cursor-pointer h-5 w-5 text-gray-500 dark:text-gray-400"
               onClick={() => setShowPassword(!showPassword)}
             />
           )}
-          <LockKeyhole className="absolute inset-y-2 left-2 text-gray-500 pointer-events-none" />
+          <LockKeyhole className="absolute inset-y-2 left-2 auth-icon" />
           {errors.password && (
             <span className="text-red-500 text-xs">{errors.password}</span>
           )}
@@ -137,16 +137,16 @@ const Login = () => {
               type="checkbox"
               checked={input.rememberMe}
               onChange={checkboxChangeHandler}
-              className="dark:border-gray-600"
+              className="border-border"
             />
-            <div>Remember me</div>
+            <div className="auth-muted">Remember me</div>
             {errors.rememberMe && (
               <span className="text-red-500 text-xs">{errors.rememberMe}</span>
             )}
           </div>
           <Link
             to="/forgot-password"
-            className="text-blue-500 hover:text-blue-800 hover:underline"
+            className="auth-link hover:underline"
           >
             Forgot Password?
           </Link>
@@ -167,9 +167,9 @@ const Login = () => {
           )}
         </div>
         <Separator className="mt-4" />
-        <p className="mt-2">
+        <p className="mt-2 auth-muted">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-blue-500 hover:text-blue-800">
+          <Link to="/signup" className="auth-link">
             Signup
           </Link>
         </p>

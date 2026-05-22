@@ -25,12 +25,15 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const DIRNAME = path.resolve();
-const configuredFrontendOrigins = process.env.FRONTEND_ORIGIN || process.env.FRONTEND_URL || "http://localhost:5173";
-const frontendOrigins = [
+const configuredFrontendOrigins = (process.env.FRONTEND_ORIGIN || process.env.FRONTEND_URL || "http://localhost:5173")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+const allowedFrontendOrigins = new Set([
     "http://localhost:5173",
     "http://localhost:5174",
-    ...configuredFrontendOrigins.split(",").map((origin) => origin.trim()),
-].filter(Boolean);
+    ...configuredFrontendOrigins,
+]);
 
 app.use(morgan("dev"));
 // Stripe webhook needs raw body for signature verification.
@@ -40,7 +43,23 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.json({ limit: "10mb", type: "application/json" }));
 app.use(cookieParser());
 const corsOptions = {
-    origin: frontendOrigins,
+    origin: (origin: string | undefined, callback: (error: Error | null, allowed?: boolean) => void) => {
+        if (!origin) {
+            callback(null, true);
+            return;
+        }
+
+        const isAllowedOrigin =
+            allowedFrontendOrigins.has(origin) ||
+            /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin);
+
+        if (isAllowedOrigin) {
+            callback(null, true);
+            return;
+        }
+
+        callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
